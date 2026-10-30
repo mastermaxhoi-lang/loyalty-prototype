@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Альфа Выгодно — Главная (единый прототип)</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="build" content="20261030-140048">
+<meta property="og:title" content="Альфа Выгодно — Главная (единый прототип)">
+<meta property="og:description" content="Демо-прототип Главной программы лояльности для бизнеса. Суммы и счётчики условные, не оферта.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mastermaxhoi-lang.github.io/loyalty-prototype/">
+<meta property="og:image" content="https://mastermaxhoi-lang.github.io/loyalty-prototype/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800;900&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="demobar">⚠️ <b>ДЕМО-ПРОТОТИП</b> · Главная · единый стиль · все суммы, проценты и счётчики — плейсхолдеры и гипотезы, не оферта</div>
+
+<nav id="nav"><div class="wrap nav-in">
+  <span class="a-logo"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#000"/><path d="M16 7l5.4 14h-3.2l-1-2.9h-2.5l.7-2h1.1L16 12.5 12.6 21H9.4L14.8 7h2.4z" fill="#EF3124"/></svg></span>
+  <div class="nav-links">
+    <a href="index.html" class="active">Главная</a>
+    <a href="#">Витрина партнёров</a>
+    <a href="#">Альфа-Пятница</a>
+    <a href="#tiers">Уровни</a>
+  </div>
+  <div class="nav-right">
+    <button class="ic-btn" aria-label="Поиск"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg></button>
+    <a class="ic-btn heart" href="#" aria-label="Избранное"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.6-10-9.2C.5 8.4 2 5 5.5 5 7.8 5 9.3 6.4 12 9c2.7-2.6 4.2-4 6.5-4C22 5 23.5 8.4 22 11.8 19.5 16.4 12 21 12 21z"/></svg></a>
+    <button class="pill-dark" onclick="openModal()">Онлайн-заявки</button>
+    <button class="pill-red" onclick="openModal()">Войти</button>
+    <button class="burger" aria-label="Меню" onclick="menu()">☰</button>
+  </div>
+</div></nav>
+
+<!-- HERO · Г1 виджет выгоды в рублях + Г2 отраслевой переключатель (🔴) + Г7 точный калькулятор -->
+<header class="hero"><div class="wrap hero-grid">
+  <div>
+    <span class="tagpill"><span class="dot"></span>Лояльность под ваше дело</span>
+    <h1>Возвращаем<br><span class="slash">рубли</span> в дело</h1>
+    <p class="lead">Выберите тип бизнеса — посчитаем выгоду в рублях за год. Кешбэк, скидки у партнёров и привилегии на одном счёте.</p>
+    <div class="chips" id="chips">
+      <button class="chip chip--onred active" data-k="cafe">☕ Кафе и общепит</button>
+      <button class="chip chip--onred" data-k="shop">🛍 Магазин</button>
+      <button class="chip chip--onred" data-k="online">💻 Услуги онлайн</button>
+      <button class="chip chip--onred" data-k="build">🏗 Стройка и ремонт</button>
+      <button class="chip chip--onred" data-k="prod">🏭 Производство</button>
+      <button class="chip chip--onred" data-k="beauty">💇 Красота и здоровье</button>
+      <button class="chip chip--onred" data-k="auto">🚗 Автосервис</button>
+      <button class="chip chip--onred" data-k="transport">🚚 Логистика</button>
+    </div>
+  </div>
+  <div class="vpanel">
+    <div class="lbl">Бизнес <span class="biz" id="biz-name">Кафе</span> может вернуть за год до</div>
+    <div class="vbig" id="vbig">0 ₽</div>
+    <div class="vsub">на кешбэке, скидках партнёров и привилегиях</div>
+    <div class="vrows" id="vrows"></div>
+    <button class="btn btn-lime" onclick="goForm()">Открыть счёт →</button>
+    <!-- Г7 · точный калькулятор -->
+    <details class="calc" id="calc">
+      <summary><span><span class="hyp" style="margin-right:8px">Г7</span>Точный калькулятор выгоды</span><span class="chev">▾</span></summary>
+      <div class="cbody">
+        <div class="slider">
+          <label>Оборот по счёту в месяц <b id="c-turn">800 000 ₽</b></label>
+          <input type="range" id="s-turn" min="100000" max="5000000" step="50000" value="800000">
+        </div>
+        <div class="slider">
+          <label>Средний кешбэк по вашим категориям <b id="c-rate">3,0%</b></label>
+          <input type="range" id="s-rate" min="10" max="60" step="1" value="30">
+        </div>
+        <div class="cres"><span>Выгода за год ≈</span><b id="c-out">0 ₽</b></div>
+        <p class="fine" style="margin-top:10px">Демо-расчёт: оборот × 12 × ставка. Реальные ставки и лимиты — по условиям программы.</p>
+      </div>
+    </details>
+    <div class="vnote">Расчёт предварительный и демонстрационный, не является офертой.</div>
+  </div>
+</div></header>
+
+<!-- Г5 · полоса социального доказательства -->
+<div class="proof">
+  <div class="it"><span class="n">120+</span><span class="t">партнёров в каталоге</span></div>
+  <div class="it"><span class="n">до 50%</span><span class="t">кешбэк баллами</span></div>
+  <div class="it"><span class="n">1 балл = 1 ₽</span><span class="t">обмен на рубли</span></div>
+  <div class="it"><span class="n">4.8★</span><span class="t">оценка предпринимателей</span></div>
+</div>
+
+<!-- Welcome-бонус за регистрацию -->
+<section class="band ink pad-sm"><div class="wrap">
+  <div class="welcome reveal">
+    <div class="wc-ic">🎁</div>
+    <div class="wc-body">
+      <h3><b>1 000 приветственных баллов</b> за подключение к программе</h3>
+      <p>Откройте счёт и подключитесь к Лояльности — приветственные баллы начислим сразу. 1 балл = 1 ₽, потратите на выгоду для дела.</p>
+    </div>
+    <button class="btn btn-lime" onclick="goForm()">Забрать бонус →</button>
+  </div>
+</div></section>
+
+<!-- «Действует сейчас»: Пятница + Витрина -->
+<section class="band ink" id="widget"><div class="wrap">
+  <div class="band-head reveal"><span class="k">Действует сейчас</span><h2>Забирайте уже сейчас</h2><p>Два активных входа: недельный оффер Альфа-Пятницы и каталог партнёров под ваше дело.</p></div>
+  <div class="widget">
+    <div class="w-card w-friday reveal">
+      <div>
+        <div class="graffiti"><span class="gr1">Альфа-Пятница</span></div>
+        <h3 style="margin-top:8px">Оффер недели</h3>
+        <p style="font-size:13.5px;margin-top:6px">Кешбэк до 15 000 ₽ в Яндекс Директе</p>
+        <div class="timer">⏳ <span id="ftimer">1д 12:00:00</span></div>
+      </div>
+      <a class="btn btn-lime btn-sm" href="#">Смотреть →</a>
+    </div>
+    <div class="w-card w-vitrina reveal">
+      <div><div class="big">120+</div><h3>Партнёрская витрина</h3><p style="color:var(--muted);font-size:13.5px;margin-top:6px">Кешбэк баллами у партнёров под ваше дело</p></div>
+      <a class="btn btn-dark btn-sm" href="#">Открыть витрину →</a>
+    </div>
+  </div>
+</div></section>
+
+<!-- Видео о программе -->
+<section class="band ink-2"><div class="wrap">
+  <div class="band-head reveal"><span class="k">Коротко о программе</span><h2>Как это работает</h2></div>
+  <div class="videowrap reveal" style="max-width:600px">
+    <video src="video.mp4" controls preload="metadata" playsinline></video>
+  </div>
+</div></section>
+
+<!-- Г3 · Активация в 1 клик (🔴 кандидат, межкоманда с НИБ) -->
+<section class="band ink-2" id="oneclick"><div class="wrap">
+  <div class="band-head reveal"><span class="k">Без поиска раздела в интернет-банке</span><h2>Активация в один клик</h2></div>
+  <div class="oneclick reveal">
+    <div class="oneclick-grid">
+      <div>
+        <span class="hyp cand">🔴 Г3 · активация в 1 клик · кандидат</span>
+        <p style="margin-top:14px;font-size:18px;max-width:44ch">Открыли счёт — выгода включается сразу. Без пяти шагов и захода в раздел интернет-банка.</p>
+        <div class="flow">
+          <span class="node">Заявка</span><span class="arr">→</span>
+          <span class="node">Счёт открыт</span><span class="arr">→</span>
+          <span class="node dim">Поиск раздела</span><span class="arr">→</span>
+          <span class="node" style="border-color:#4FBF85;color:#8FE0B0">Выгода включена</span>
+        </div>
+        <div class="cand-note">🔴 Крупная ставка · зависит от реального процесса активации (НИБ/РКО). Перед закреплением в план — /против + техпроверка «правда ли включается автоматически».</div>
+      </div>
+      <div class="big1">1 клик<span>вместо 5 шагов и перехода в НИБ</span></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- Г8 · Три уровня привилегий (Золотой вместо второго Серебряного) -->
+<section class="band violet" id="tiers"><div class="wrap">
+  <div class="band-head reveal"><span class="k">Уровень растёт по обороту счёта</span><h2>Три уровня привилегий</h2><p><span class="hyp">Г8 · лестница Бронзовый → Серебряный → Золотой</span></p></div>
+  <div class="tiers">
+    <div class="tier t1 reveal"><div class="head"><div class="lion">1</div><div><div class="lvl">Уровень 1</div><h3>Бронзовый</h3></div></div>
+      <dl><div class="rowi"><dt>Обмен баллов на рубли</dt><dd>20 000 ₽</dd></div><div class="rowi"><dt>Категории кешбэка</dt><dd>до 5</dd></div><div class="rowi"><dt>Лимит кешбэка по карте</dt><dd>до 10 000</dd></div><div class="rowi"><dt>Кешбэк на продукты банка</dt><dd>до 3 500</dd></div><div class="rowi"><dt>Предложения банка / партнёров</dt><dd>1 / 1</dd></div><div class="rowi"><dt>Колесо удачи</dt><dd>Недоступно</dd></div></dl></div>
+    <div class="tier t2 reveal"><div class="head"><div class="lion">2</div><div><div class="lvl">Уровень 2</div><h3>Серебряный</h3></div></div>
+      <dl><div class="rowi"><dt>Обмен баллов на рубли</dt><dd>30 000 ₽</dd></div><div class="rowi"><dt>Категории кешбэка</dt><dd>до 6</dd></div><div class="rowi"><dt>Лимит кешбэка по карте</dt><dd>до 12 500</dd></div><div class="rowi"><dt>Кешбэк на продукты банка</dt><dd>до 7 000</dd></div><div class="rowi"><dt>Предложения банка / партнёров</dt><dd>2 / 2</dd></div><div class="rowi"><dt>Колесо удачи</dt><dd>1</dd></div></dl></div>
+    <div class="tier t3 reveal"><div class="head"><div class="lion">3</div><div><div class="lvl">Уровень 3</div><h3>Золотой</h3></div></div>
+      <dl><div class="rowi"><dt>Обмен баллов на рубли</dt><dd>50 000 ₽</dd></div><div class="rowi"><dt>Категории кешбэка</dt><dd>до 7</dd></div><div class="rowi"><dt>Лимит кешбэка по карте</dt><dd>до 15 000</dd></div><div class="rowi"><dt>Кешбэк на продукты банка</dt><dd>до 10 500</dd></div><div class="rowi"><dt>Предложения банка / партнёров</dt><dd>3 / 3</dd></div><div class="rowi"><dt>Колесо удачи</dt><dd>2</dd></div></dl></div>
+  </div>
+</div></section>
+
+<!-- Блок наград / достижений -->
+<section class="band ink"><div class="wrap">
+  <div class="band-head reveal"><span class="k">Геймификация · повод вернуться</span><h2>Награды и достижения</h2><p>Открывайте награды за активность в программе — они мотивируют возвращаться и растить уровень.</p></div>
+  <div class="awards">
+    <div class="award reveal"><div class="ic">🏅</div><h4>Первая выгода</h4><div class="sub">Активировали первый оффер</div><span class="status got">✓ Получено</span></div>
+    <div class="award reveal"><div class="ic">🔥</div><h4>Активный месяц</h4><div class="sub">5 активаций за месяц</div><span class="status got">✓ Получено</span></div>
+    <div class="award locked reveal"><div class="ic">🥇</div><h4>Золотой уровень</h4><div class="sub">Достигните 3-го уровня привилегий</div><div class="prog"><i style="width:64%"></i></div><span class="status lock">2 из 3 уровней</span></div>
+    <div class="award locked reveal"><div class="ic">🤝</div><h4>Амбассадор</h4><div class="sub">Пригласите 3 предпринимателей</div><div class="prog"><i style="width:33%"></i></div><span class="status lock">1 из 3</span></div>
+  </div>
+</div></section>
+
+<!-- Баллы: заработать + потратить -->
+<section class="band ink" id="points"><div class="wrap">
+  <div class="band-head reveal"><span class="k">Несколько источников</span><h2>Как заработать баллы</h2></div>
+  <div class="grid4" style="margin-bottom:18px">
+    <a class="ec dark reveal" href="#"><div class="graffiti"><span class="gr1">АЛЬФА</span><span class="gr2">ПЯТНИЦА</span></div><div><h3>Альфа-Пятница</h3><p>до 15 000 ₽ кешбэка каждую неделю</p></div></a>
+    <div class="ec red reveal"><div class="big">до 60%</div><div><h3>Категории кешбэка</h3><p>Выбирайте выгодные под расходы дела</p></div></div>
+    <a class="ec blue reveal" href="#"><div class="big">120+</div><div><h3>Кешбэк от партнёров</h3><p>Реклама, бухгалтерия, логистика, связь</p></div></a>
+    <div class="ec violet reveal"><div class="ic">👥</div><div><h3>Реферальная программа</h3><p>Баллы за приглашённых предпринимателей</p></div></div>
+  </div>
+  <div class="band-head reveal" style="margin-top:40px"><span class="k">Баллы работают на дело</span><h2>На что потратить баллы</h2></div>
+  <div class="spend">
+    <div class="sp reveal"><div class="ic">💰</div><div><h3>Реальные деньги</h3><p>Меняйте баллы на рубли: 1 балл = 1 ₽</p></div></div>
+    <div class="sp reveal"><div class="ic">🏦</div><div><h3>Предложения банка</h3><p>Скидки на продукты и сервисы Альфы</p></div></div>
+    <a class="sp reveal" href="#"><div class="ic">🤝</div><div><h3>Предложения партнёров</h3><p>Реклама, бухгалтерия, логистика, связь</p></div></a>
+    <div class="sp reveal"><div class="ic">❤️</div><div><h3>Помощь детям</h3><p>Переводите баллы на благотворительность</p></div></div>
+  </div>
+</div></section>
+
+<!-- Новостной виджет: «Новости и события» + «Программа в цифрах» (объединённый блок, решение PO 05.07) -->
+<section class="band ink-2" id="news"><div class="wrap">
+  <div class="band-head reveal"><span class="k">Программа живёт</span><h2>Новости и события</h2></div>
+  <div class="newsgrid">
+    <div class="feed">
+      <div class="fitem reveal" onclick="to('#widget')"><div class="fic">🤝</div><div><span class="ftag partner">Новый партнёр</span><h4>Ozon для бизнеса — в каталоге</h4><p>Кешбэк до 40% баллами на закупки и поставки для дела.</p></div><span class="date">5 июл</span></div>
+      <div class="fitem reveal" onclick="location.href='#'"><div class="fic">🔥</div><div><span class="ftag promo">Акция</span><h4>Альфа-Пятница: Яндекс Директ</h4><p>До 15 000 ₽ кешбэка на запуск рекламы — до конца недели.</p></div><span class="date">4 июл</span></div>
+      <div class="fitem reveal" onclick="to('#tiers')"><div class="fic">📰</div><div><span class="ftag news">Новость</span><h4>Появился «Золотой» уровень</h4><p>Новый верхний уровень привилегий с лимитом кешбэка до 15 000.</p></div><span class="date">1 июл</span></div>
+      <div class="fitem reveal" onclick="location.href='#'"><div class="fic">🎉</div><div><span class="ftag event">Событие</span><h4>120-й партнёр в программе</h4><p>Каталог партнёрских офферов преодолел отметку 120.</p></div><span class="date">28 июн</span></div>
+    </div>
+    <div class="numbers reveal">
+      <h3>Программа в цифрах</h3>
+      <div class="numstat"><div class="big countup" data-target="12480">0</div><div class="lbl">бизнесов участвуют в программе</div></div>
+      <div class="numstat"><div class="big countup" data-money="1" data-target="1284000000">0 ₽</div><div class="lbl">клиенты сэкономили за всё время</div></div>
+      <div class="numstat"><div class="big">120+</div><div class="lbl">партнёров в каталоге</div></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- Анкета / три шага -->
+<section class="band lime" id="start"><div class="wrap">
+  <div class="band-head reveal"><span class="k">Три шага</span><h2>Как получить выгоду</h2></div>
+  <div class="anketa-grid">
+    <div class="steps">
+      <div class="step reveal"><div class="n">1</div><div><h3>Заполните анкету</h3><p>Откройте бесплатный счёт для бизнеса онлайн</p></div></div>
+      <div class="step reveal"><div class="n">2</div><div><h3>Войдите в Альфа-Бизнес</h3><p>Лояльность подключается автоматически</p></div></div>
+      <div class="step reveal"><div class="n">3</div><div><h3>Заберите выгоду</h3><p>Кешбэк и привилегии за обычные расходы на дело</p></div></div>
+    </div>
+    <form class="form reveal" id="form-main" onsubmit="return submitF('form-main','ok')">
+      <h3>Анкета на открытие счёта</h3><p class="sub">Бесплатно для бизнеса. Перезвоним и поможем со стартом.</p>
+      <div class="form-row">
+        <div class="field full"><label>Имя и фамилия</label><input id="f-name" data-req type="text" placeholder="Иван Петров"></div>
+        <div class="field"><label>Телефон</label><input data-req type="tel" placeholder="+7 (___) ___-__-__"></div>
+        <div class="field"><label>Email</label><input type="email" placeholder="ivan@delo.ru"></div>
+        <div class="field"><label>Название или ИНН</label><input type="text" placeholder="ООО «Дело» / 7700000000"></div>
+        <div class="field"><label>Тип бизнеса</label><select><option>Кафе и общепит</option><option>Магазин</option><option>Услуги онлайн</option><option>Стройка</option><option>Другое</option></select></div>
+      </div>
+      <button class="btn btn-red" style="width:100%" type="submit">Открыть счёт →</button>
+      <div class="ok" id="ok">✓ Анкета принята — это демо, ничего не отправлено</div>
+      <p class="fine">Демо-анкета. Реальные ставки кешбэка и условия требуют согласования с юристами и финансами.</p>
+    </form>
+  </div>
+</div></section>
+
+<!-- FAQ -->
+<section class="band white" id="faq"><div class="wrap">
+  <div class="band-head reveal"><span class="k">Полезно знать</span><h2>Частые вопросы</h2></div>
+  <div class="faq" id="faqlist"></div>
+</div></section>
+
+<!-- Г4 · Финальный конверсионный CTA -->
+<section class="ctaband"><div class="wrap">
+  <h2 class="reveal">Откройте счёт —<br>и верните деньги делу</h2>
+  <p class="reveal">Лояльность подключается за пару минут. <span class="hyp" style="color:#fff;background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3)">Г4 · закрывающий CTA</span></p>
+  <button class="btn btn-lime btn-lg reveal" onclick="goForm()">Открыть счёт →</button>
+</div></section>
+
+<footer><div class="wrap foot-in"><span class="foot-logo">Альфа Выгодно</span><p class="foot-disc">Единый прототип-эталон «ММБ Лояльность» (Главная). Все суммы, проценты и счётчики — плейсхолдеры и гипотезы, не оферта и не реальные условия банка. Гипотезы помечены бейджами; 🔴 — крупные ставки, требующие /против перед закреплением.</p></div></footer>
+
+<!-- Общая модалка-заявка (по CTA в шапке) -->
+<div class="modal" id="modal"><div class="box">
+  <button class="x" onclick="closeModal()" aria-label="Закрыть">×</button>
+  <h3 style="font-size:22px;margin-bottom:6px">Открыть счёт для бизнеса</h3>
+  <p class="sub" style="color:var(--muted);font-size:14px;margin-bottom:18px">Бесплатно. Перезвоним и поможем со стартом.</p>
+  <form id="form-modal" onsubmit="return submitF('form-modal','ok-modal')">
+    <div class="field"><label>Имя и фамилия</label><input data-req type="text" placeholder="Иван Петров"></div>
+    <div class="field"><label>Телефон</label><input data-req type="tel" placeholder="+7 (___) ___-__-__"></div>
+    <button class="btn btn-red" style="width:100%" type="submit">Отправить заявку →</button>
+    <div class="ok" id="ok-modal">✓ Заявка принята — это демо, ничего не отправлено</div>
+  </form>
+</div></div>
+
+<script src="common.js"></script>
+<script>
+  // Г1/Г2 · выгода по нишам
+  var BIZ={
+    cafe:{name:'Кафе и общепит',total:184000,rate:30,turn:800000,rows:[['Кешбэк на закупки и сервисы','96 000 ₽'],['Альфа-Пятница у партнёров','48 000 ₽'],['Скидки на рекламу и доставку','40 000 ₽']]},
+    shop:{name:'Магазин',total:232000,rate:34,turn:1100000,rows:[['Кешбэк на эквайринг','120 000 ₽'],['Партнёрские скидки','72 000 ₽'],['Welcome и категории','40 000 ₽']]},
+    online:{name:'Услуги онлайн',total:268000,rate:40,turn:900000,rows:[['Кешбэк на рекламу и таргет','150 000 ₽'],['Сервисы и подписки','78 000 ₽'],['Категории под digital','40 000 ₽']]},
+    build:{name:'Стройка и ремонт',total:312000,rate:28,turn:1800000,rows:[['Кешбэк на материалы','190 000 ₽'],['Логистика и техника','82 000 ₽'],['Welcome-кешбэк','40 000 ₽']]},
+    prod:{name:'Производство',total:356000,rate:26,turn:2200000,rows:[['Кешбэк на сырьё и оборудование','214 000 ₽'],['Логистика и энергия','102 000 ₽'],['Welcome-кешбэк','40 000 ₽']]},
+    beauty:{name:'Красота и здоровье',total:156000,rate:32,turn:650000,rows:[['Кешбэк на расходники и косметику','84 000 ₽'],['Реклама и запись клиентов','52 000 ₽'],['Welcome-кешбэк','20 000 ₽']]},
+    auto:{name:'Автосервис',total:208000,rate:30,turn:950000,rows:[['Кешбэк на запчасти','118 000 ₽'],['Оборудование и сервисы','70 000 ₽'],['Welcome-кешбэк','20 000 ₽']]},
+    transport:{name:'Логистика',total:276000,rate:27,turn:1500000,rows:[['Кешбэк на топливо','156 000 ₽'],['Техобслуживание и сервисы','80 000 ₽'],['Welcome-кешбэк','40 000 ₽']]}
+  };
+  var curK='cafe';
+  function renderBiz(k,animate){
+    var b=BIZ[k];curK=k;
+    document.getElementById('biz-name').textContent=b.name;
+    document.getElementById('vrows').innerHTML=b.rows.map(function(r){return '<div class="vrow"><span>'+r[0]+'</span><b>'+r[1]+'</b></div>';}).join('');
+    var el=document.getElementById('vbig'),t=b.total;
+    if(animate&&!window.__reduce){var t0=performance.now();(function step(n){var p=Math.min((n-t0)/900,1);p=1-Math.pow(1-p,3);el.textContent=fmtRub(Math.floor(t*p));if(p<1)requestAnimationFrame(step);})(t0);}
+    else el.textContent=fmtRub(t);
+    // синхронизируем точный калькулятор с выбранной нишей
+    document.getElementById('s-turn').value=b.turn;
+    document.getElementById('s-rate').value=b.rate;
+    calc();
+  }
+  document.querySelectorAll('#chips .chip').forEach(function(c){c.onclick=function(){document.querySelectorAll('#chips .chip').forEach(function(x){x.classList.remove('active');});c.classList.add('active');renderBiz(c.dataset.k,true);};});
+
+  // Г7 · точный калькулятор
+  function calc(){
+    var turn=+document.getElementById('s-turn').value, rate=+document.getElementById('s-rate').value;
+    document.getElementById('c-turn').textContent=fmtRub(turn);
+    document.getElementById('c-rate').textContent=(rate/10).toFixed(1).replace('.',',')+'%';
+    var year=Math.round(turn*12*(rate/1000)/1000)*1000;
+    document.getElementById('c-out').textContent=fmtRub(year);
+  }
+  document.getElementById('s-turn').oninput=calc;
+  document.getElementById('s-rate').oninput=calc;
+  renderBiz('cafe',true);
+
+  // колесо (демо)
+  function spin(btn){btn.disabled=true;btn.textContent='Крутим…';var prizes=['50%','100%','кешбэк ×2','подписка в подарок'];setTimeout(function(){btn.disabled=false;btn.textContent='Выпало: '+prizes[Math.floor(Math.random()*prizes.length)]+' 🎉';},900);}
+
+  // FAQ
+  renderFAQ('faqlist',[
+    ['Как стать участником программы лояльности «Альфа-Выгодно для бизнеса»?','Откройте расчётный счёт для бизнеса — лояльность подключается автоматически. (Демо-ответ.)'],
+    ['Где можно узнать подробные условия о программе лояльности?','В правилах программы на сайте банка. (Демо-ответ.)'],
+    ['Как получить баллы?','За покупки у партнёров, операции по счёту и участие в акциях. (Демо-ответ.)'],
+    ['Когда начисляются баллы?','Обычно в течение нескольких дней после операции. (Демо-ответ.)'],
+    ['На что можно потратить баллы?','На рубли (1 балл = 1 ₽), предложения банка и партнёров, благотворительность. (Демо-ответ.)'],
+    ['Какую выгоду для бизнеса получают участники?','Кешбэк, скидки у партнёров, повышенные лимиты и привилегии по уровням. (Демо-ответ.)']
+  ]);
+
+  // «Программа в цифрах»: счёт вверх при появлении (участники + сколько сэкономили клиенты)
+  (function(){
+    var done=new WeakSet();
+    function fin(el){var t=+el.dataset.target,money=el.dataset.money==='1';el.textContent=money?fmtRub(t):t.toLocaleString('ru-RU');done.add(el);}
+    function run(el){
+      if(done.has(el))return; done.add(el);
+      var t=+el.dataset.target, money=el.dataset.money==='1', t0=performance.now();
+      if(window.__reduce){fin(el);return;}
+      (function s(n){var p=Math.min((n-t0)/1300,1);p=1-Math.pow(1-p,3);var v=Math.floor(t*p);el.textContent=money?fmtRub(v):v.toLocaleString('ru-RU');if(p<1)requestAnimationFrame(s);})(t0);
+    }
+    var co=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)run(e.target);});},{threshold:.25});
+    var els=document.querySelectorAll('.countup');
+    els.forEach(function(el){co.observe(el);});
+    // фолбэк: если блок так и не появился в зоне видимости — показать итог, чтобы не осталось «0»
+    setTimeout(function(){els.forEach(function(el){if(!done.has(el))fin(el);});},4000);
+  })();
+</script>
+</body>
+</html>

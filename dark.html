@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Альфа Выгодно — финальный прототип (best-of)</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="build" content="20261030-140048">
+<meta property="og:title" content="Альфа Выгодно — финальный прототип (best-of)">
+<meta property="og:description" content="Демо-прототип Главной программы лояльности для бизнеса. Суммы и счётчики условные, не оферта.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mastermaxhoi-lang.github.io/loyalty-prototype/dark.html">
+<meta property="og:image" content="https://mastermaxhoi-lang.github.io/loyalty-prototype/og-dark.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800;900&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0C0C10; --card:#16161C; --card-2:#1E1E26; --line:#2A2A33; --muted:#9498A6; --white:#fff;
+    --red:#EF3124; --red-d:#C81E12; --lime:#C6F03A; --lime-d:#A6D515; --blue:#2F6BFF; --violet:#7A4FF0; --pink:#FF5BA0; --gold:#E8C26A; --silver:#C7CBD1; --amber:#FFB23E;
+    --light:#F2F2F5; --r:22px; --pad:clamp(16px,5vw,80px); --maxw:1240px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--white);font-family:"Golos Text",system-ui,sans-serif;font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  h1,h2,h3,.disp{font-family:"Unbounded",sans-serif;letter-spacing:-.02em;line-height:1.04}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--pad)}
+  .muted{color:var(--muted)}
+  @keyframes float{0%,100%{transform:translateY(0) rotate(var(--rot,0deg))}50%{transform:translateY(-14px) rotate(calc(var(--rot,0deg) + 5deg))}}
+  @keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
+  @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  .demobar{background:#000;color:#7d808d;font-size:12.5px;letter-spacing:.04em;text-align:center;padding:7px 14px}
+  .demobar b{color:var(--lime)}
+
+  .btn{display:inline-flex;align-items:center;gap:10px;cursor:pointer;border:none;font-family:"Golos Text";font-weight:700;font-size:16px;border-radius:999px;padding:15px 28px;transition:transform .16s,box-shadow .2s,background .2s}
+  .btn-red{background:var(--red);color:#fff;box-shadow:0 8px 24px rgba(239,49,36,.28)}.btn-red:hover{background:var(--red-d);transform:translateY(-2px)}
+  .btn-light{background:#fff;color:#16161a}.btn-light:hover{transform:translateY(-2px)}
+  .btn-ghost{background:transparent;border:1.5px solid var(--line);color:#fff}.btn-ghost:hover{border-color:#fff}
+  .btn-lg{padding:17px 32px}
+
+  nav{position:sticky;top:0;z-index:80;background:rgba(0,0,0,.74);backdrop-filter:blur(14px);border-bottom:1px solid #1c1c1c}
+  .nav-in{display:flex;align-items:center;gap:30px;height:64px}
+  .a-logo{width:30px;height:30px;flex:none}
+  .nav-links{display:flex;gap:24px}.nav-links a{font-size:15px;opacity:.9;font-weight:500}.nav-links a:hover{opacity:1}
+  .nav-right{margin-left:auto;display:flex;gap:12px;align-items:center}
+  .ic-btn{background:none;border:none;color:#fff;cursor:pointer;width:36px;height:36px;display:grid;place-items:center}.ic-btn svg{width:21px;height:21px}.heart{color:var(--red)}
+  .pill-dark{background:#1c1c1f;color:#fff;border:none;border-radius:999px;padding:11px 20px;font-family:inherit;font-weight:600;font-size:14.5px;cursor:pointer}
+  .pill-red{background:var(--red);color:#fff;border:none;border-radius:999px;padding:11px 22px;font-family:inherit;font-weight:600;font-size:14.5px;cursor:pointer}
+  .burger{display:none;width:42px;height:42px;border-radius:10px;border:1px solid #333;background:none;color:#fff;font-size:18px;cursor:pointer}
+
+  /* HERO */
+  .hero{padding:clamp(30px,4vw,52px) 0 clamp(40px,5vw,64px);position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(760px 380px at 82% -10%,rgba(239,49,36,.20),transparent 60%),radial-gradient(640px 360px at 4% 120%,rgba(122,79,240,.16),transparent 60%)}
+  .hero-grid{display:grid;grid-template-columns:1.04fr .96fr;gap:34px;align-items:center}
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:7px 15px;margin-bottom:20px}
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--lime);animation:pulse 2s infinite}
+  h1{font-size:clamp(34px,5vw,60px);font-weight:900;min-height:1.2em}
+  h1 .grad{background:linear-gradient(100deg,#fff,var(--lime));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .h1-switch{display:flex;gap:8px;align-items:center;margin-top:14px}
+  .h1-switch button{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--line);background:none;color:#fff;cursor:pointer;font-size:17px}
+  .h1-switch button:hover{border-color:#fff}.h1-switch .lbl{font-size:12.5px;color:var(--muted)}
+  .lead{color:#c2c6d2;font-size:clamp(16px,1.4vw,19px);max-width:36ch;margin:18px 0 18px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+  .chip{border:1.5px solid var(--line);background:var(--card);color:#cdd1dd;border-radius:999px;padding:10px 16px;font-weight:600;font-size:14px;cursor:pointer;transition:all .18s}
+  .chip:hover{border-color:var(--red)}.chip.active{background:var(--red);color:#fff;border-color:var(--red)}
+  .hero-actions{display:flex;gap:13px;flex-wrap:wrap}
+
+  .vpanel{background:linear-gradient(165deg,var(--card-2),#0b0b10);border:1px solid var(--line);border-radius:28px;padding:clamp(22px,3vw,34px);position:relative;overflow:hidden}
+  .vpanel::before{content:"";position:absolute;right:-30%;top:-50%;width:80%;height:120%;background:radial-gradient(circle,rgba(239,49,36,.16),transparent 60%);pointer-events:none}
+  .vpanel .lbl{color:var(--muted);font-size:13.5px}.vpanel .biz{color:var(--lime);font-weight:700}
+  .vbig{font-family:"Unbounded";font-weight:900;font-size:clamp(40px,6.4vw,68px);line-height:1;margin:8px 0;font-variant-numeric:tabular-nums;background:linear-gradient(100deg,#fff,var(--lime));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .vsub{color:var(--muted);font-size:13.5px;margin-bottom:18px}
+  .vrows{display:flex;flex-direction:column;gap:9px;margin-bottom:20px}
+  .vrow{display:flex;justify-content:space-between;gap:12px;font-size:14px;padding:11px 14px;background:#0b0b10;border-radius:12px}
+  .vrow b{color:var(--lime);font-variant-numeric:tabular-nums}
+  .vpanel .btn{width:100%}.vnote{color:var(--muted);font-size:11px;margin-top:10px;text-align:center}
+
+  .marq{background:#000;color:#fff;padding:13px 0;border-top:2px solid var(--red);border-bottom:2px solid var(--red);overflow:hidden;white-space:nowrap}
+  .marq .track{display:inline-block;animation:slide 26s linear infinite;font-family:"Unbounded";font-weight:800;font-size:19px;text-transform:uppercase}
+  .marq .track span{margin:0 24px}.marq .star{color:var(--red)}
+
+  .proof{display:flex;gap:24px;flex-wrap:wrap;align-items:center;justify-content:center;border-bottom:1px solid var(--line);padding:18px var(--pad)}
+  .proof .it{display:flex;align-items:baseline;gap:10px}.proof .n{font-family:"Unbounded";font-weight:800;font-size:22px;color:var(--lime);font-variant-numeric:tabular-nums}.proof .t{color:var(--muted);font-size:13px;max-width:18ch}
+
+  section.block{padding:clamp(40px,5vw,72px) 0}
+  .sec-head{margin-bottom:clamp(24px,3vw,40px)}
+  .kicker{display:inline-flex;align-items:center;gap:8px;color:var(--red);font-weight:600;font-size:13px;letter-spacing:.03em;text-transform:uppercase;margin-bottom:10px}
+  .kicker .tag{background:rgba(239,49,36,.12);border:1px solid rgba(239,49,36,.3);border-radius:6px;padding:2px 8px;font-size:11px;letter-spacing:0;text-transform:none;color:#ffb3ab}
+  h2{font-size:clamp(26px,3.4vw,42px);font-weight:800}
+  .sec-head p{color:var(--muted);margin-top:12px;max-width:52ch}
+
+  .activate{display:grid;grid-template-columns:1.2fr 1fr;gap:24px;align-items:center;background:linear-gradient(160deg,#211019,#0c0a10);border:1px solid #3a1820;border-radius:26px;padding:clamp(24px,3vw,40px)}
+  .activate h2{font-size:clamp(23px,2.6vw,32px)}.activate p{color:#d0a7af;margin:12px 0 18px;max-width:40ch}
+  .flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .flow .node{background:#160d11;border:1px solid #3a1820;border-radius:13px;padding:13px 15px;font-weight:600;font-size:14px}
+  .flow .node.on{background:var(--red);color:#fff;border-color:var(--red)}.flow .ar{color:var(--red);font-weight:800}
+  .activate .oneclick{text-align:center}.activate .oneclick .big{font-family:Unbounded;font-weight:900;font-size:clamp(38px,7vw,66px);color:var(--red)}
+
+  .wheel{display:grid;grid-template-columns:1.3fr 1fr;gap:18px;background:linear-gradient(160deg,#1a1622,#0e0c12);border:1px solid var(--line);border-radius:26px;padding:clamp(24px,3vw,38px)}
+  .wheel h3{font-family:Unbounded;font-size:clamp(22px,2.4vw,30px)}.wheel p{color:var(--muted);margin:10px 0 18px;max-width:34ch}
+  .wheel .art{display:flex;gap:10px;align-items:center;margin-top:10px}
+  .money{font-family:Unbounded;font-weight:900;font-size:30px;color:#fff;padding:.1em .3em;border-radius:10px;transform:rotate(-6deg)}
+  .money.g{background:linear-gradient(135deg,#3ddc84,#1a9e5a)}.money.b{background:linear-gradient(135deg,#37e0ff,#1192c4);color:#06222a;transform:rotate(4deg)}
+  .prizes{display:flex;flex-direction:column;gap:10px;justify-content:center}
+  .prize{display:flex;align-items:center;gap:14px;border-radius:14px;padding:13px 18px;font-weight:600}.prize .p{font-family:Unbounded;font-weight:900;font-size:21px}.prize.pa{background:#4b3a86}.prize.pb{background:#2f8aa3;color:#04212a}.prize.pc2{background:#9a7240;color:#21160a}
+
+  .tabswitch{display:inline-flex;gap:6px;background:var(--card);border-radius:999px;padding:5px;margin-bottom:22px}
+  .tabswitch button{border:none;background:none;cursor:pointer;font:inherit;font-weight:600;font-size:14.5px;padding:10px 18px;border-radius:999px;color:var(--muted)}.tabswitch button.active{background:#fff;color:#16161a}
+  .steps-top{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
+  .stp{background:var(--card);border-radius:18px;padding:22px}.stp .n{width:42px;height:42px;border-radius:50%;border:2px solid var(--red);color:var(--red);display:grid;place-items:center;font-weight:800;margin-bottom:14px}
+  .stp h3{font-size:17px}.stp p{color:var(--muted);font-size:13.5px;margin-top:4px}
+  .form{background:var(--card);border-radius:var(--r);padding:clamp(24px,3vw,36px);max-width:580px;margin:0 auto}
+  .form h3{font-size:22px;margin-bottom:16px;text-align:center}
+  .field{margin-bottom:14px}.field label{font-size:13px;color:var(--muted);display:block;margin-bottom:7px}
+  .field input{width:100%;background:#0b0b10;border:1.5px solid var(--line);border-radius:13px;padding:15px;color:#fff;font:inherit;font-size:16px}.field input:focus{outline:none;border-color:var(--red)}
+  .form-actions{display:flex;gap:12px}.form-actions .btn{flex:1;justify-content:center}
+  .ok{display:none;align-items:center;gap:8px;color:var(--lime);font-weight:700;margin-top:14px;justify-content:center}.ok.show{display:flex}
+  .fine{color:var(--muted);font-size:12px;margin-top:14px;line-height:1.45;text-align:center}
+
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .tier{background:var(--card);border-radius:24px;padding:26px;display:flex;flex-direction:column;transition:transform .25s}
+  .tier:hover{transform:translateY(-6px)}.tier.t3{background:#000;border:1px solid #2a2a33}
+  .tier .head{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+  .tier .lion{width:54px;height:54px;border-radius:50%;flex:none;display:grid;place-items:center;font-size:28px;background-size:240% 240%;animation:holo 8s ease infinite}
+  @keyframes holo{0%{background-position:0 50%}50%{background-position:100% 50%}100%{background-position:0 50%}}
+  .tier.t1 .lion{background-image:linear-gradient(135deg,#e6a463,#7a3d12,#e6a463)}.tier.t2 .lion{background-image:linear-gradient(135deg,#eef1f5,#9aa1ad,#eef1f5)}.tier.t3 .lion{background-image:linear-gradient(135deg,#ffe08a,#c79a2a,#ffe08a)}
+  .tier .lvl{font-size:12.5px;color:var(--muted)}.tier h3{font-size:22px}.tier.t3 h3{color:var(--gold)}.tier.t2 h3{color:var(--silver)}
+  .tier .rowi{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--line);font-size:14px}.tier .rowi dt{color:var(--muted)}.tier .rowi dd{font-weight:700;text-align:right;white-space:nowrap}
+
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .ec{border-radius:20px;padding:22px;min-height:175px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;transition:transform .22s}.ec:hover{transform:translateY(-6px)}
+  .ec .ic{font-size:30px}.ec .big{font-family:Unbounded;font-weight:900;font-size:26px}.ec h3{font-size:16px}.ec p{font-size:13px;opacity:.82;margin-top:4px}
+  .ec.dark{background:#000;color:#fff}.ec.card{background:var(--card);color:#fff}.ec.red{background:var(--red);color:#fff}.ec.blue{background:var(--blue);color:#fff}.ec.violet{background:var(--violet);color:#fff}.ec.lime{background:var(--lime);color:#13160a}.ec.pink{background:var(--pink);color:#2a1020}
+  .ec .graff{display:inline-flex;gap:4px;margin:6px 0}.ec .g1{background:var(--red);color:#fff;font-family:Unbounded;font-weight:900;font-size:16px;padding:1px 6px;transform:skewX(-6deg)}.ec .g2{background:var(--lime);color:#13160a;font-family:Unbounded;font-weight:900;font-size:16px;padding:1px 6px;transform:skewX(-6deg)}
+
+  .spend{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .sp{background:var(--light);color:#16161a;border-radius:20px;padding:22px;min-height:160px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .22s}.sp:hover{transform:translateY(-6px)}.sp .ic{font-size:30px}.sp h3{font-size:16px}.sp p{color:#6a6a72;font-size:13px;margin-top:4px}
+
+  /* alfa-friday banner */
+  .friday{display:grid;grid-template-columns:1.2fr 1fr;gap:18px;align-items:center;background:linear-gradient(150deg,#1a1622,#0b0a10);border:1px solid var(--line);border-radius:26px;padding:clamp(24px,3vw,38px)}
+  .friday .graffiti{display:inline-flex;gap:6px;margin:10px 0}.friday .gr1{background:var(--red);color:#fff;font-family:Unbounded;font-weight:900;font-size:clamp(22px,3vw,34px);padding:2px 10px;transform:skewX(-7deg)}.friday .gr2{background:var(--lime);color:#13160a;font-family:Unbounded;font-weight:900;font-size:clamp(22px,3vw,34px);padding:2px 10px;transform:skewX(-7deg)}
+  .friday p{color:var(--muted);max-width:36ch}
+  .friday .timer{display:inline-flex;gap:8px;align-items:center;font-weight:700;font-variant-numeric:tabular-nums;color:#13160a;background:var(--lime);padding:10px 16px;border-radius:999px;margin-top:14px}
+
+  .faqband{background:var(--light);color:#16161a}.faqband .kicker{color:var(--red)}.faqband h2{color:#16161a}
+  .faq{max-width:900px;margin:0 auto}
+  .q{background:#fff;border-radius:16px;margin-bottom:10px;overflow:hidden}
+  .q button{width:100%;background:none;border:none;text-align:left;cursor:pointer;font-family:inherit;font-weight:600;font-size:17px;color:#16161a;padding:22px 24px;display:flex;justify-content:space-between;gap:20px;align-items:center}
+  .q .s{flex:none;width:26px;height:26px;display:grid;place-items:center;font-size:20px;color:#9a9aa2;transition:transform .3s}.q.open .s{transform:rotate(45deg);color:var(--red)}
+  .q .a{max-height:0;overflow:hidden;transition:max-height .35s ease}.q .a p{padding:0 24px 22px;color:#6a6a72;font-size:15px;max-width:66ch}
+
+  .ctaband{background:var(--red);color:#fff;text-align:center;padding:clamp(44px,6vw,84px) 0}
+  .ctaband h2{font-size:clamp(30px,5vw,60px);font-weight:900}.ctaband p{margin:16px auto 30px;max-width:44ch;opacity:.95}
+
+  footer{background:#000;color:#7d808d;padding:42px 0 54px;font-size:14px}
+  .foot-in{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center}.foot-disc{max-width:58ch;font-size:12px;line-height:1.5}
+
+  .side-banner{position:fixed;right:18px;bottom:18px;z-index:85;width:320px;max-width:calc(100vw - 30px);background:#0b0a10;border:1.5px solid #2a2238;border-radius:20px;padding:20px;box-shadow:0 24px 60px rgba(0,0,0,.5);transform:translateY(150%);transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+  .side-banner.show{transform:none}
+  .side-banner .x{position:absolute;right:12px;top:12px;width:25px;height:25px;border-radius:50%;border:none;background:#26212f;color:#fff;cursor:pointer;font-size:13px}
+  .side-banner .graffiti{display:inline-flex;gap:5px;margin-bottom:10px}.side-banner .gr1{background:var(--red);color:#fff;font-family:Unbounded;font-weight:900;font-size:16px;padding:2px 7px;transform:skewX(-7deg)}.side-banner .gr2{background:var(--lime);color:#13160a;font-family:Unbounded;font-weight:900;font-size:16px;padding:2px 7px;transform:skewX(-7deg)}
+  .side-banner h4{font-family:Unbounded;font-size:17px;margin-bottom:8px}.side-banner p{font-size:13px;color:var(--muted);margin-bottom:14px}.side-banner .btn{width:100%;padding:12px}
+
+  .modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(8,6,12,.78);backdrop-filter:blur(6px)}.modal.show{display:flex}
+  .calc{width:min(940px,100%);max-height:90vh;overflow:auto;background:var(--card-2);border:1px solid var(--line);border-radius:28px;padding:clamp(20px,3vw,34px)}
+  .calc-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.calc-top h3{font-family:Unbounded;font-size:24px}.calc-x{width:40px;height:40px;border-radius:50%;border:none;background:#26212f;color:#fff;cursor:pointer;font-size:18px}
+  .calc-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:22px}.calc-cond,.calc-res{background:#13101b;border-radius:20px;padding:24px}
+  .calc-cond h4,.calc-res h4{font-family:Unbounded;font-size:16px;margin-bottom:18px}
+  .sl{margin-bottom:22px}.sl label{font-size:13px;color:var(--muted);display:block;margin-bottom:4px}.sl .val{font-family:Unbounded;font-weight:800;font-size:23px;margin-bottom:8px}.sl input[type=range]{width:100%;accent-color:var(--red)}.sl .hint{font-size:12px;color:var(--muted);margin-top:6px}
+  .chk{display:flex;gap:10px;align-items:flex-start;font-size:14px;cursor:pointer;color:#c2c6d2}.chk input{margin-top:3px;accent-color:var(--red)}
+  .lvlcard{display:flex;align-items:center;gap:16px;background:#1d1828;border-radius:16px;padding:16px 18px;margin-bottom:16px;border:2px solid transparent}.lvlcard .lion{width:48px;height:48px;border-radius:50%;flex:none;font-size:24px;display:grid;place-items:center}
+  .lvlcard.l1 .lion{background:radial-gradient(circle at 35% 30%,#e6a463,#7a3d12)}.lvlcard.l2 .lion{background:radial-gradient(circle at 35% 30%,#eef1f5,#9aa1ad)}.lvlcard.l3 .lion{background:radial-gradient(circle at 35% 30%,#ffe08a,#c79a2a)}.lvlcard.l2{border-color:var(--silver)}.lvlcard.l3{border-color:var(--gold)}
+  .lvlcard .nm{font-family:Unbounded;font-weight:800;font-size:18px}.lvlcard .nx{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .priv{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}.pcell{background:#1d1828;border-radius:14px;padding:14px}.pcell .t{font-size:11.5px;color:var(--muted);min-height:30px;line-height:1.25}.pcell .v{font-family:Unbounded;font-weight:800;font-size:17px;margin-top:8px}
+  .calc-note{font-size:11.5px;color:var(--muted);margin-top:12px}
+
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s,transform .6s}.reveal.in{opacity:1;transform:none}
+  @media(max-width:980px){
+    .hero-grid,.activate,.wheel,.steps-top,.tiers,.friday,.calc-grid,.priv{grid-template-columns:1fr}.priv{grid-template-columns:repeat(2,1fr)}
+    .grid4,.spend{grid-template-columns:repeat(2,1fr)}
+    .nav-links,.pill-dark{display:none}.burger{display:grid;place-items:center}.side-banner{width:290px}
+  }
+  @media(max-width:560px){.grid4,.spend{grid-template-columns:1fr}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="demobar">⚠️ <b>ДЕМО-ПРОТОТИП</b> · финальный best-of · все суммы, проценты и счётчики — плейсхолдеры и гипотезы, не оферта</div>
+
+<nav id="nav"><div class="wrap nav-in">
+  <span class="a-logo"><svg viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#000"/><path d="M16 7l5.4 14h-3.2l-1-2.9h-2.5l.7-2h1.1L16 12.5 12.6 21H9.4L14.8 7h2.4z" fill="#EF3124"/></svg></span>
+  <div class="nav-links"><a href="#biz">Ваша выгода</a><a href="#tiers">Уровни</a><a href="#earn">Заработать</a><a href="#faq">Вопросы</a></div>
+  <div class="nav-right">
+    <button class="ic-btn" aria-label="Поиск"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg></button>
+    <button class="ic-btn heart" aria-label="Избранное"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.6-10-9.2C.5 8.4 2 5 5.5 5 7.8 5 9.3 6.4 12 9c2.7-2.6 4.2-4 6.5-4C22 5 23.5 8.4 22 11.8 19.5 16.4 12 21 12 21z"/></svg></button>
+    <button class="pill-dark">Онлайн-заявки</button><button class="pill-red" onclick="goForm()">Войти</button>
+    <button class="burger" onclick="menu()">☰</button>
+  </div>
+</div></nav>
+
+<header class="hero"><div class="wrap hero-grid">
+  <div>
+    <span class="eyebrow reveal"><span class="dot"></span>Лояльность, собранная под ваш бизнес</span>
+    <h1 class="reveal" id="h1"></h1>
+    <div class="h1-switch reveal"><button onclick="h1prev()">‹</button><span class="lbl" id="h1lbl"></span><button onclick="h1next()">›</button></div>
+    <p class="lead reveal">Возвращаем деньги за то, что вы и так покупаете для бизнеса. Выберите тип дела — покажем выгоду в рублях.</p>
+    <div class="chips reveal" id="chips">
+      <button class="chip active" data-k="cafe">☕ Кафе</button><button class="chip" data-k="shop">🛍 Магазин</button><button class="chip" data-k="serv">🔧 Услуги</button><button class="chip" data-k="online">💻 Онлайн</button><button class="chip" data-k="build">🏗 Стройка</button>
+    </div>
+    <div class="hero-actions reveal"><button class="btn btn-red btn-lg" onclick="goForm()">Открыть счёт →</button><button class="btn btn-ghost btn-lg" onclick="openCalc()">Точный калькулятор</button></div>
+  </div>
+  <div class="vpanel reveal" id="biz">
+    <div class="lbl">Бизнес <span class="biz" id="biz-name">Кафе</span> вернёт за год</div>
+    <div class="vbig" id="vbig">0 ₽</div>
+    <div class="vsub">на кешбэке, скидках партнёров и привилегиях — при обычных расходах на дело</div>
+    <div class="vrows" id="vrows"></div>
+    <button class="btn btn-red" onclick="goForm()">Забрать эту выгоду →</button>
+    <div class="vnote">Расчёт предварительный и демонстрационный. Реальные ставки — по правилам программы.</div>
+  </div>
+</div></header>
+
+<div class="marq"><div class="track" id="marq"></div></div>
+
+<div class="proof">
+  <div class="it"><span class="n" id="p1">0</span><span class="t">бизнесов активировали сегодня</span></div>
+  <div class="it"><span class="n" id="pmoney">128 450 000 ₽</span><span class="t">вернули клиентам за месяц</span></div>
+  <div class="it"><span class="n">120+</span><span class="t">партнёров в каталоге выгоды</span></div>
+  <div class="it"><span class="n">4.8★</span><span class="t">оценка предпринимателей</span></div>
+</div>
+
+<section class="block"><div class="wrap"><div class="activate reveal">
+  <div>
+    <span class="kicker">Инсайт <span class="tag">воронка сайт → банк теряет активации</span></span>
+    <h2>Активация в один клик</h2>
+    <p>Открыли счёт — выгода включается сразу, без поисков раздела в интернет-банке.</p>
+    <div class="flow"><span class="node on">Заявка</span><span class="ar">→</span><span class="node on">Счёт открыт</span><span class="ar">→</span><span class="node on">Выгода включена</span></div>
+  </div>
+  <div class="oneclick"><div class="big">1 клик</div><div class="muted" style="font-size:14px">вместо 5 шагов и перехода в НИБ</div></div>
+</div></div></section>
+
+<section class="block"><div class="wrap"><div class="wheel reveal">
+  <div><h3>Колесо удачи для новых клиентов</h3><p>Крутите и получайте скидки до 100% на пакеты услуг для бизнеса</p><button class="btn btn-red" onclick="alert('Демо: крутим колесо удачи')">Крутить скорее!</button><div class="art"><span class="money g">50%</span><span class="money b">100%</span></div></div>
+  <div class="prizes"><div class="prize pa"><span class="p">60%</span> Подписка Альфа-Таргет</div><div class="prize pb"><span class="p">100%</span> Подписка Альфа-Таргет</div><div class="prize pc2"><span class="p">40%</span> Пакет «Высокие обороты»</div></div>
+</div></div></section>
+
+<section class="block" id="start"><div class="wrap">
+  <div class="sec-head reveal"><span class="kicker">Три шага</span><h2>Как получать выгоду</h2></div>
+  <div class="tabswitch reveal"><button class="active">Не клиент Альфа-Бизнес</button><button>Клиент Альфа-Бизнес</button></div>
+  <div class="steps-top">
+    <div class="stp reveal"><div class="n">1</div><h3>Заявка</h3><p>Заполните заявку и откройте бесплатный счёт для бизнеса</p></div>
+    <div class="stp reveal"><div class="n">2</div><h3>Войдите в интернет-банк</h3><p>Альфа-Бизнес подтянет учётные данные автоматически</p></div>
+    <div class="stp reveal"><div class="n">3</div><h3>Готово</h3><p>Попадаете в Альфа-Выгодно и начинаете получать выгоду</p></div>
+  </div>
+  <div class="form reveal">
+    <h3>Заявка на открытие счёта для бизнеса</h3>
+    <div class="field"><label>Телефон</label><input id="f-name" type="tel" placeholder="+7 (___) ___-__-__"></div>
+    <div class="form-actions"><button class="btn btn-ghost" onclick="submitF()">Позвонить мне</button><button class="btn btn-red" onclick="submitF()">Заполнить онлайн</button></div>
+    <div class="ok" id="ok">✓ Заявка принята — это демо, ничего не отправлено</div>
+    <p class="fine">Демо-форма. Реальные ставки кешбэка и условия требуют согласования с юристами и финансами.</p>
+  </div>
+</div></section>
+
+<section class="block" id="tiers"><div class="wrap">
+  <div class="sec-head reveal"><span class="kicker">Уровень растёт по обороту счёта</span><h2>3 уровня привилегий</h2></div>
+  <div class="tiers">
+    <div class="tier t1 reveal"><div class="head"><div class="lion">🦁</div><div><div class="lvl">Уровень 1</div><h3>Бронзовый</h3></div></div>
+      <dl><div class="rowi"><dt>Обмен баллов на рубли</dt><dd>20 000 ₽</dd></div><div class="rowi"><dt>Категории кешбэка</dt><dd>до 5</dd></div><div class="rowi"><dt>Лимит кешбэка по карте</dt><dd>до 10 000</dd></div><div class="rowi"><dt>Кешбэк на продукты банка</dt><dd>до 3 500</dd></div><div class="rowi"><dt>Предложения банка / партнёров</dt><dd>1 / 1</dd></div><div class="rowi"><dt>Колесо удачи</dt><dd>Недоступно</dd></div></dl></div>
+    <div class="tier t2 reveal"><div class="head"><div class="lion">🦁</div><div><div class="lvl">Уровень 2</div><h3>Серебряный</h3></div></div>
+      <dl><div class="rowi"><dt>Обмен баллов на рубли</dt><dd>30 000 ₽</dd></div><div class="rowi"><dt>Категории кешбэка</dt><dd>до 6</dd></div><div class="rowi"><dt>Лимит кешбэка по карте</dt><dd>до 12 500</dd></div><div class="rowi"><dt>Кешбэк на продукты банка</dt><dd>до 7 000</dd></div><div class="rowi"><dt>Предложения банка / партнёров</dt><dd>2 / 2</dd></div><div class="rowi"><dt>Колесо удачи</dt><dd>1</dd></div></dl></div>
+    <div class="tier t3 reveal"><div class="head"><div class="lion">🦁</div><div><div class="lvl">Уровень 3</div><h3>Золотой</h3></div></div>
+      <dl><div class="rowi"><dt>Обмен баллов на рубли</dt><dd>50 000 ₽</dd></div><div class="rowi"><dt>Категории кешбэка</dt><dd>до 7</dd></div><div class="rowi"><dt>Лимит кешбэка по карте</dt><dd>до 15 000</dd></div><div class="rowi"><dt>Кешбэк на продукты банка</dt><dd>до 10 500</dd></div><div class="rowi"><dt>Предложения банка / партнёров</dt><dd>3 / 3</dd></div><div class="rowi"><dt>Колесо удачи</dt><dd>2</dd></div></dl></div>
+  </div>
+</div></section>
+
+<section class="block" id="earn"><div class="wrap">
+  <div class="sec-head reveal"><span class="kicker">Инсайт <span class="tag">выгода в рублях, не в %</span></span><h2>Как заработать баллы</h2></div>
+  <div class="grid4">
+    <div class="ec dark reveal"><div class="graff"><span class="g1">АЛЬФА</span><span class="g2">ПЯТНИЦА</span></div><div><h3>Альфа-Пятница</h3><p>до 15 000 ₽ кешбэка каждую неделю</p></div></div>
+    <div class="ec red reveal"><div class="big">до 60%</div><div><h3>Категории кешбэка</h3><p>Выбирайте выгодные под расходы бизнеса</p></div></div>
+    <div class="ec blue reveal"><div class="big">120+</div><div><h3>Кешбэк от партнёров</h3><p>Реклама, бухгалтерия, логистика, связь</p></div></div>
+    <div class="ec violet reveal"><div class="ic">👥</div><div><h3>Реферальная программа</h3><p>Баллы за каждого приглашённого предпринимателя</p></div></div>
+  </div>
+</div></section>
+
+<section class="block"><div class="wrap">
+  <div class="sec-head reveal"><span class="kicker">Баллы работают на бизнес</span><h2>На что потратить баллы</h2></div>
+  <div class="spend">
+    <div class="sp reveal"><div class="ic">💰</div><div><h3>Реальные деньги</h3><p>Меняйте баллы на рубли: 1 балл = 1 ₽</p></div></div>
+    <div class="sp reveal"><div class="ic">🏦</div><div><h3>Предложения банка</h3><p>Скидки на продукты и сервисы Альфы</p></div></div>
+    <div class="sp reveal"><div class="ic">🤝</div><div><h3>Предложения партнёров</h3><p>Реклама, бухгалтерия, логистика, связь</p></div></div>
+    <div class="sp reveal"><div class="ic">❤️</div><div><h3>Помощь детям</h3><p>Переводите баллы на благотворительность</p></div></div>
+  </div>
+</div></section>
+
+<section class="block"><div class="wrap"><div class="friday reveal">
+  <div><div style="font-weight:700">Эта неделя</div><div class="graffiti"><span class="gr1">АЛЬФА</span><span class="gr2">ПЯТНИЦА</span></div><p>Повышенный кешбэк до 15 000 ₽ у партнёров недели. Успейте активировать.</p><div class="timer">⏳ <span id="ftimer">11:59:59</span> до конца</div></div>
+  <div class="grid4" style="grid-template-columns:1fr 1fr;gap:14px"><div class="ec pink reveal"><div class="big">30%</div><h3>КАСКО и ОСАГО</h3></div><div class="ec lime reveal"><div class="big">50%</div><h3>Яндекс Бизнес</h3></div></div>
+</div></div></section>
+
+<section class="block faqband"><div class="wrap">
+  <div class="sec-head reveal"><span class="kicker">Полезно знать</span><h2>Частые вопросы</h2></div>
+  <div class="faq" id="faqlist"></div>
+</div></section>
+
+<section class="ctaband"><div class="wrap">
+  <h2 class="reveal">Откройте счёт —<br>и верните деньги делу</h2>
+  <p class="reveal">Лояльность подключается за пару минут. Перезвоним и поможем со стартом.</p>
+  <button class="btn btn-light btn-lg reveal" onclick="goForm()">Открыть счёт →</button>
+</div></section>
+
+<footer><div class="wrap foot-in">
+  <span style="font-family:Unbounded;font-weight:900;color:#fff;font-size:19px">Альфа Выгодно</span>
+  <p class="foot-disc">Финальный прототип-эталон видения продукта «ММБ Лояльность» (синтез лучшего из 4 направлений + инсайты). Все суммы, проценты и счётчики — плейсхолдеры и гипотезы, не оферта и не реальные условия банка.</p>
+</div></footer>
+
+<div class="side-banner" id="sideBanner">
+  <button class="x" onclick="closeSide()">✕</button>
+  <div class="graffiti"><span class="gr1">АЛЬФА</span><span class="gr2">ВЫГОДНО</span></div>
+  <h4>Хватит платить полную цену</h4>
+  <p>Откройте счёт и начинайте возвращать деньги бизнесу. Подключение — пара минут.</p>
+  <button class="btn btn-red" onclick="goForm()">Открыть счёт →</button>
+</div>
+
+<div class="modal" id="calcModal"><div class="calc">
+  <div class="calc-top"><h3>Калькулятор выгоды</h3><button class="calc-x" onclick="closeCalc()">✕</button></div>
+  <div class="calc-grid">
+    <div class="calc-cond"><h4>Условия</h4>
+      <div class="sl"><label>Сумма платежей в месяц</label><div class="val" id="v-pay">150 000 ₽</div><input type="range" id="s-pay" min="50000" max="1000000" step="10000" value="150000" oninput="recalc()"><div class="hint" id="h-pay"></div></div>
+      <div class="sl"><label>Среднемесячный остаток</label><div class="val" id="v-bal">150 000 ₽</div><input type="range" id="s-bal" min="0" max="1000000" step="10000" value="150000" oninput="recalc()"></div>
+      <label class="chk"><input type="checkbox" id="premium" onchange="recalc()"><span>Есть карта «Альфа Бизнес Премиум» — в 2 раза больше лимиты</span></label>
+    </div>
+    <div class="calc-res"><h4>Вы получите</h4>
+      <div class="lvlcard" id="lvlcard"><div class="lion">🦁</div><div><div class="nm" id="lvl-name">Уровень 1: Бронзовый</div><div class="nx" id="lvl-next"></div></div></div>
+      <div style="font-weight:700;font-size:14px;margin-bottom:10px">Привилегии в месяц</div>
+      <div class="priv" id="priv"></div>
+      <button class="btn btn-red" style="width:100%" onclick="closeCalc();goForm()">Начать получать выгоду →</button>
+      <p class="calc-note">Расчёт предварительный. Все цифры — демо.</p>
+    </div>
+  </div>
+</div></div>
+
+<script>
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  // H1 variants
+  const H1=['Не проценты.<br><span class="grad">Реальные рубли</span> делу','Лучшая программа<br>лояльности <span class="grad">для бизнеса</span>','Выгода <span class="grad">в каждом</span><br>платеже бизнеса','Альфа <span class="grad">Выгодно</span><br>для дела'];
+  let h1i=0;function drawH1(){document.getElementById('h1').innerHTML=H1[h1i];document.getElementById('h1lbl').textContent='вариант '+(h1i+1)+' / '+H1.length}
+  function h1next(){h1i=(h1i+1)%H1.length;drawH1()}function h1prev(){h1i=(h1i-1+H1.length)%H1.length;drawH1()}drawH1();
+  // marquee
+  const M=['Получайте всё и даже больше с Альфа Выгодно','Кешбэк до 500 000 ₽','120+ партнёров','Альфа-Пятница каждую неделю'];
+  document.getElementById('marq').innerHTML=M.concat(M).map(t=>'<span>'+t+' <span class="star">✦</span></span>').join('');
+  // biz personalization
+  const BIZ={cafe:{name:'Кафе',total:184000,rows:[['Кешбэк на закупки и сервисы','96 000 ₽'],['Альфа-Пятница у партнёров','48 000 ₽'],['Скидки на рекламу и доставку','40 000 ₽']]},shop:{name:'Магазин',total:232000,rows:[['Кешбэк на эквайринг','120 000 ₽'],['Партнёрские скидки','72 000 ₽'],['Welcome и категории','40 000 ₽']]},serv:{name:'Услуги',total:148000,rows:[['Кешбэк на расходы','78 000 ₽'],['Реклама и продвижение','46 000 ₽'],['Альфа-Пятница','24 000 ₽']]},online:{name:'Онлайн',total:268000,rows:[['Кешбэк на рекламу и таргет','150 000 ₽'],['Сервисы и подписки','78 000 ₽'],['Категории под digital','40 000 ₽']]},build:{name:'Стройка',total:312000,rows:[['Кешбэк на материалы','190 000 ₽'],['Логистика и техника','82 000 ₽'],['Welcome-кешбэк','40 000 ₽']]}};
+  function fmt(n){return n.toLocaleString('ru-RU')+' ₽'}
+  function renderBiz(k,an){const b=BIZ[k];document.getElementById('biz-name').textContent=b.name;document.getElementById('vrows').innerHTML=b.rows.map(([t,v])=>'<div class="vrow"><span>'+t+'</span><b>'+v+'</b></div>').join('');const el=document.getElementById('vbig'),t=b.total;if(an&&!matchMedia('(prefers-reduced-motion:reduce)').matches){const t0=performance.now();(function s(n){let p=Math.min((n-t0)/900,1);p=1-Math.pow(1-p,3);el.textContent=fmt(Math.floor(t*p));if(p<1)requestAnimationFrame(s)})(t0)}else el.textContent=fmt(t)}
+  document.querySelectorAll('#chips .chip').forEach(c=>c.onclick=()=>{document.querySelectorAll('#chips .chip').forEach(x=>x.classList.remove('active'));c.classList.add('active');renderBiz(c.dataset.k,true)});renderBiz('cafe',true);
+  // proof
+  let pc=187;const p1=document.getElementById('p1');p1.textContent=pc;let money=128450000;const pm=document.getElementById('pmoney');
+  if(!matchMedia('(prefers-reduced-motion:reduce)').matches){setInterval(()=>{pc+=Math.random()<.6?1:0;p1.textContent=pc},2300);setInterval(()=>{money+=Math.floor(120+Math.random()*700);pm.textContent=fmt(money)},1500)}
+  // timer
+  let sec=11*3600+59*60+59;const ft=document.getElementById('ftimer');function tick(){sec=Math.max(0,sec-1);ft.textContent=[Math.floor(sec/3600),Math.floor(sec%3600/60),sec%60].map(x=>String(x).padStart(2,'0')).join(':')}
+  if(!matchMedia('(prefers-reduced-motion:reduce)').matches)setInterval(tick,1000);
+  // side banner
+  let sideClosed=false;addEventListener('scroll',()=>{if(!sideClosed&&scrollY>1100)document.getElementById('sideBanner').classList.add('show')});function closeSide(){sideClosed=true;document.getElementById('sideBanner').classList.remove('show')}
+  // tabs
+  document.querySelectorAll('.tabswitch button').forEach(b=>b.onclick=()=>{b.parentElement.querySelectorAll('button').forEach(x=>x.classList.remove('active'));b.classList.add('active')});
+  // faq
+  const FAQ=[['Как стать участником программы лояльности «Альфа-Выгодно для бизнеса»?','Откройте расчётный счёт для бизнеса — лояльность подключается автоматически. (Демо-ответ.)'],['Где можно узнать подробные условия о программе лояльности?','В правилах программы на сайте банка. (Демо-ответ.)'],['Как получить баллы?','За покупки у партнёров, операции по счёту и участие в акциях. (Демо-ответ.)'],['Когда начисляются баллы?','Обычно в течение нескольких дней после операции. (Демо-ответ.)'],['На что можно потратить баллы?','На рубли (1 балл = 1 ₽), предложения банка и партнёров, благотворительность. (Демо-ответ.)'],['Где посмотреть, сколько баллов на балансе?','В личном кабинете и приложении Альфа-Банка. (Демо-ответ.)'],['Какую выгоду для бизнеса получают участники программы лояльности?','Кешбэк, скидки у партнёров, повышенные лимиты и привилегии по уровням. (Демо-ответ.)'],['Все предложения для бизнеса','Перейти в каталог предложений для бизнеса → (демо-ссылка).'],['Все предложения партнёров Альфа-Банка','Перейти в витрину партнёров → (демо-ссылка).']];
+  document.getElementById('faqlist').innerHTML=FAQ.map(([q,a])=>'<div class="q reveal"><button onclick="tq(this)">'+q+'<span class="s">+</span></button><div class="a"><p>'+a+'</p></div></div>').join('');
+  document.querySelectorAll('#faqlist .reveal').forEach(el=>io.observe(el));
+  function tq(b){const q=b.parentElement,a=q.querySelector('.a'),o=q.classList.contains('open');document.querySelectorAll('.q.open').forEach(x=>{x.classList.remove('open');x.querySelector('.a').style.maxHeight=null});if(!o){q.classList.add('open');a.style.maxHeight=a.scrollHeight+'px'}}
+  function submitF(){document.getElementById('ok').classList.add('show')}
+  function to(s){document.querySelector(s).scrollIntoView({behavior:'smooth'})}
+  function goForm(){to('#start');setTimeout(()=>document.getElementById('f-name').focus(),600)}
+  function menu(){const l=document.querySelector('.nav-links');const o=l.style.display==='flex';l.style.cssText=o?'':'display:flex;position:absolute;top:64px;left:0;right:0;flex-direction:column;background:#000;padding:18px var(--pad);gap:16px;border-bottom:1px solid #1c1c1c'}
+  // calc
+  const LV={1:{name:'Уровень 1: Бронзовый',cls:'l1',priv:[['Категорий кешбэка','+1'],['Кешбэк на продукты банка','до 10 000'],['Лимит кешбэка','до 10 000'],['Обмен баллов на рубли','20 000 ₽'],['Предложения банка','1'],['Колесо удачи','0']]},2:{name:'Уровень 2: Серебряный',cls:'l2',priv:[['Категорий кешбэка','+2'],['Кешбэк на продукты банка','до 12 500'],['Лимит кешбэка','до 12 500'],['Обмен баллов на рубли','30 000 ₽'],['Предложения банка','2'],['Колесо удачи','1']]},3:{name:'Уровень 3: Золотой',cls:'l3',priv:[['Категорий кешбэка','+3'],['Кешбэк на продукты банка','до 15 000'],['Лимит кешбэка','до 15 000'],['Обмен баллов на рубли','50 000 ₽'],['Предложения банка','3'],['Колесо удачи','2']]}};
+  function recalc(){const pay=+document.getElementById('s-pay').value,prem=document.getElementById('premium').checked;document.getElementById('v-pay').textContent=fmt(pay);document.getElementById('v-bal').textContent=fmt(+document.getElementById('s-bal').value);let lvl=pay>=350000?3:pay>=250000?2:1,next=lvl===1?'До серебряного уровня ещё '+fmt(250000-pay):lvl===2?'До золотого уровня ещё '+fmt(350000-pay):'Максимальный уровень достигнут';const L=LV[lvl];document.getElementById('lvlcard').className='lvlcard '+L.cls;document.getElementById('lvl-name').textContent=L.name;document.getElementById('lvl-next').textContent=next;document.getElementById('h-pay').textContent=next;document.getElementById('priv').innerHTML=L.priv.map(([t,v])=>{let vv=v;if(prem&&v.indexOf('до')===0){const n=v.replace(/\D/g,'');if(n)vv='до '+(+n*2).toLocaleString('ru-RU')}return '<div class="pcell"><div class="t">'+t+'</div><div class="v">'+vv+'</div></div>'}).join('')}
+  function openCalc(){document.getElementById('calcModal').classList.add('show');recalc()}function closeCalc(){document.getElementById('calcModal').classList.remove('show')}
+  document.getElementById('calcModal').addEventListener('click',e=>{if(e.target.id==='calcModal')closeCalc()});addEventListener('keydown',e=>{if(e.key==='Escape')closeCalc()});
+</script>
+</body>
+</html>
